@@ -36,3 +36,14 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/sylius_params /etc/nginx/sylius_params
 
 RUN chown www-data.www-data /etc/nginx/sylius_params
+
+# Install yarn
+RUN curl -sS http://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN curl -sL http://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+RUN apt-get install yarn
+
+# Yarn assets
+RUN cd ${SYLIUS_DIR} \
+&& yarn install && yarn run gulp
