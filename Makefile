@@ -47,7 +47,7 @@ endif
 shell:: ##@Development Bring up a shell
 	docker exec \
 		-ti \
-        -u www-data \
+		-u www-data \
 		${NAME}-app \
 		bash
 
@@ -56,5 +56,15 @@ console:: ##@Development Call Symfony "console" with "console [<CMD>]"
 	docker exec \
 		-ti \
 		-u www-data \
+		-w /var/www/sylius \
 		${NAME}-app \
-		sylius/bin/console $(CMD)
+		bin/console $(CMD)
+
+.PHONY: command
+command:: ##@Development Call command with "command [<CMD>]"
+	docker exec \
+		-ti \
+		-u www-data \
+		-w /var/www/sylius \
+		${NAME}-app \
+		$(CMD)

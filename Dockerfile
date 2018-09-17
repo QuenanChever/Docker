@@ -37,14 +37,12 @@ RUN apt-get install -y yarn
 
 # Copy project files
 ADD ./sylius ${SYLIUS_DIR}
-ADD ./setup.sh ${SYLIUS_DIR}/setup.sh
 
 WORKDIR ${BASE_DIR}
 
 RUN cd ${SYLIUS_DIR} \
 	&& chown -R www-data: . \
-	&& chmod +x bin/console \
-	&& chmod +x setup.sh
+	&& chmod +x bin/*
 
 # entrypoint.d scripts
 COPY entrypoint.d/* /entrypoint.d/
